@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	th:replace="base::layout(~{::section})">
+<head>
+<meta charset="utf-8">
+
+</head>
+<body>
+
+	<section>
+		<div class="container">
+			<div class="row">
+				<div class="container col-md-8 ">
+					<div class="my-card my-3 ">
+						<div th:if=${session.message}
+							th:classappend="${session.message.type}" class="alert"
+							role="alert">
+							<p class="text-center" th:text=${session.message.content}></p>
+							<!-- <th:block th:text="${#session.removeAttribute('message')}" /> -->
+						</div>
+
+						<h1 class="text-center">Register Here !</h1>
+						<form novalidate th:action="@{/do_register}" method="post"
+							th:object="${user}">
+							<!-- name field -->
+							<div class="mb-3">
+								<label for="name" class="form-label">Your Name</label> 
+								<input
+									type="text" class="form-control " id="name" name="name"
+									th:value="${user.name}"
+									th:classappend="${#fields.hasErrors('name')? 'is-invalid':''}" />
+								<div th:each="e: ${#fields.errors('name')}"
+									th:text="${e}"
+								 class="invalid-feedback">
+								</div>
+							</div>
+							<!-- Email field -->
+							<div class="mb-3">
+								<label for="email" class="form-label">Email address</label> <input
+									type="email" class="form-control" name="email" id="email"
+									th:value="${user.email}">
+							</div>
+							<!-- pass field -->
+							<div class="mb-3">
+								<label for="password" class="form-label">Password</label> <input
+									type="password" class="form-control" name="password"
+									id="password">
+							</div>
+							<!-- About field -->
+							<div class="mb-3">
+								<textarea name="about" id="" rows="10" class="form-control"
+									placeholder="Enter Something about yourself"
+									th:text="${user.about}"></textarea>
+							</div>
+							<!-- Terms and condition checkbox -->
+							<div class="form-group text-center">
+								<input type="checkbox" class="form-check-input mr-3"
+									name="agreement" id="agreement" /> <label for="agreement">Terms
+									and Conditions</label>
+							</div>
+							<div class="container text-center">
+								<button type="submit" class="btn bg-primary text-white">Submit
+								</button>
+								<button type="reset" class="btn btn-warning ">Reset</button>
+							</div>
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+
+</body>
+</html>
