@@ -1,6 +1,6 @@
 package com.ankit.entities;
 
-import java.util.Objects;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -8,6 +8,9 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.ManyToOne;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
 
 @Entity
 public class Contact {
@@ -15,16 +18,20 @@ public class Contact {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int cId;
+	@NotBlank(message="Name Field is required")
 	private String name;
 	private String secondName;
 	private String work;
+	@Email(message="Invalid Email,Please enter Proper Email")
 	private String email;
+	@Size(min=10,max=13,message="Enter minimun 10 number")
 	private String phone;
 	private String imageUrl;
 	@Column(length=500)
 	private String description;
 	
 	@ManyToOne 
+	@JsonIgnore
 	private User user;
 	
 	public Contact() {

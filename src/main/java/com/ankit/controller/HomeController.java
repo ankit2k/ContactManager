@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 
@@ -69,8 +70,9 @@ public class HomeController {
 		user.setPassword(bEncoder.encode(user.getPassword()));
 		User saveUser=userRepository.save(user);
 		System.out.println(user);
-		m.addAttribute("user",new User());
+		session.setAttribute("user",new User());
 		session.setAttribute("message", new Message("Successfully Registered" , "alert-success"));
+		
 		return "signup";
 	} catch (Exception e) {
 	e.printStackTrace();
@@ -87,5 +89,7 @@ public class HomeController {
 		model.addAttribute("title","Login Page");
 		return "login";
 	}
+	
+
 	
 }

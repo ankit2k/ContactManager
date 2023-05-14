@@ -14,6 +14,7 @@ import org.springframework.core.io.ClassPathResource;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -32,11 +33,15 @@ import com.ankit.entities.User;
 import com.ankit.helper.Message;
 
 import jakarta.servlet.http.HttpSession;
+import jakarta.validation.Valid;
 
 @Controller
 @RequestMapping("/user")
 public class UserController {
 
+	@Autowired
+	private BCryptPasswordEncoder encoder;
+	
 	@Autowired
 	private UserRepository userRepository;
 
@@ -74,7 +79,7 @@ public class UserController {
 	
 	//processing add contact form
 	@PostMapping("/process-contact")
-	public String processContact( @ModelAttribute Contact contact,
+	public String processContact(@Valid @ModelAttribute Contact contact,
 			@RequestParam("profileImage") MultipartFile file,
 			Principal principal,
 			HttpSession httpSession) {
@@ -220,7 +225,7 @@ public class UserController {
 	
 	//Update contact handler
 	@PostMapping("/process-update")
-	public String updateHandler(@ModelAttribute Contact contact
+	public String updateHandler(@Valid @ModelAttribute Contact contact
 	,Model model,
 	@RequestParam("profileImage") MultipartFile file,
 	Principal principal) {
@@ -271,4 +276,33 @@ public class UserController {
 		return "normal/profile";
 	}
 	
+	//Open Setting haNDLER
+	@GetMapping("/settings")
+	public String openSettings(Model model) {
+		model.addAttribute("title", "Settings");
+		return "normal/settings";
+	}
+	//Change Setting haNDLER
+		@PostMapping("/change-password")
+		public String changeSettings(@RequestParam("oldPassword") String oldPassword,
+				@RequestParam("newPassword") String newPassword, Principal principal) {
+			
+			System.out.println("old Pass: "+oldPassword);
+			System.out.println("new Pass: "+newPassword);
+			
+			String name=principal.getName();
+			User user=this.userRepository.getUserByUserName(name);
+			if(this.encoder.matches(oldPassword, user.getPassword())) {
+				//Change the Password
+				user.setPassword(this.encoder.encode(newPassword));
+				this.userRepository.save(user);
+			}else {
+				//error
+				return "redirect:/user/settings";
+			}
+			
+			
+			return "redirect:/user/index";
+		}
+		
 }

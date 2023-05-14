@@ -26,6 +26,9 @@ th:replace="base::layout(~{::section})">
                 <div th:if="${param.logout}" class="alert alert-success">
               You Have been Logged Out
               </div>
+                <div th:if="${param.change}" class="alert alert-success">
+              <span th:text="${param.change}"></span>
+              </div>
               <p class=" mb-4">Please enter your login and password!</p>
 
               <div class="form-outline mb-3">
@@ -40,7 +43,7 @@ th:replace="base::layout(~{::section})">
 
               <button class="btn btn-outline-dark btn-lg px-5" type="submit">Login</button>
 				
-				<p class="small mt-4 pt-lg-2"><a class="" href="#!">Forgot password?</a></p>
+				<p class="small mt-4 pt-lg-2"><a class="card-title" th:href="@{/forgot}" >Forgot password?</a></p>
               <div class="d-flex justify-content-center text-center mt-4 pt-1">
                 <a href="#!" class="text-white"><i class="fab fa-facebook-f fa-lg"></i></a>
                 <a href="#!" class="text-white"><i class="fab fa-twitter fa-lg mx-4 px-2"></i></a>

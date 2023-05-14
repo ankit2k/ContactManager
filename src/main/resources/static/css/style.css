@@ -10,21 +10,29 @@ body {
 	width: 100%;
 	height: 93vh;
 	color: white;
-	background: linear-gradient(rgba(0, 0, 0, .8), rgba(1, 62, 53, 0.7));
+	background: linear-gradient(rgba(0, 0, 0, .8),rgba(0,0,0,0.4)),url('../img/bg-img.jpg');
+	background-size:cover;
 }
 
 .my-card {
 	padding: 20px;
+	
 	background: white;
 }
+
+#hamBurger{
+	display:none;
+	font-size: x-large;
+}
+
 
 /* sidebar style */
 .sidebar {
 	width: 18%;
 	background: white;
 	height: 100%;
-	padding-top: 45px;
-	position: fixed;
+	margin-top: 3.8rem;
+	padding-top: 4rem;
 	z-index: 9999999999;
 }
 
@@ -75,9 +83,22 @@ body {
 
 .search-container{
 	position:relative;
+	
 }
 
-.search-result{}
+.search-result{
+	position:absolute;
+	width:100%;
+	background: white;
+	padding:10px; 
+	border:1px solid grey;
+	display:none;
+}
+
+.active{
+	background: #009688;
+	color:white !important;
+}
 
 
 @media only screen and (max-width:600px) {

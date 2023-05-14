@@ -16,7 +16,7 @@
 							th:classappend="${session.message.type}" class="alert"
 							role="alert">
 							<p class="text-center" th:text=${session.message.content}></p>
-							<!-- <th:block th:text="${#session.removeAttribute('message')}" /> -->
+							  <th:block th:text="${@sessionHelper.removeMsgFromSession()}" />  
 						</div>
 
 						<h1 class="text-center">Register Here !</h1>
@@ -37,14 +37,25 @@
 							<!-- Email field -->
 							<div class="mb-3">
 								<label for="email" class="form-label">Email address</label> <input
-									type="email" class="form-control" name="email" id="email"
-									th:value="${user.email}">
+									type="email" class="form-control" name="email" id="email" required
+									th:value="${user.email}"
+									th:classappend="${#fields.hasErrors('email')? 'is-invalid':''}"
+									>
+									<div th:each="e: ${#fields.errors('email')}"
+									th:text="${e}"
+								 class="invalid-feedback">
+								</div>
 							</div>
 							<!-- pass field -->
 							<div class="mb-3">
 								<label for="password" class="form-label">Password</label> <input
-									type="password" class="form-control" name="password"
-									id="password">
+									type="password" class="form-control" name="password" required
+									id="password"
+									th:classappend="${#fields.hasErrors('password')? 'is-invalid':''}">
+									<div th:each="e: ${#fields.errors('password')}"
+									th:text="${e}"
+								 class="invalid-feedback">
+								</div>
 							</div>
 							<!-- About field -->
 							<div class="mb-3">

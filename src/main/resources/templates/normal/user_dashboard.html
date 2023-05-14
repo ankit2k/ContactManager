@@ -22,6 +22,12 @@ th:replace="normal/normal_base::layout(~{::section})">
 	</div>
 </div>
 </div>
+<script>
+$(document).ready(()=> {
+	$(".item").removeClass("active");
+	$("#home-link").addClass("active");
+});
+</script>
 </section>
 </body>
 </html>

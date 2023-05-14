@@ -3,6 +3,8 @@ package com.ankit.entities;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.hibernate.validator.constraints.UniqueElements;
+
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -11,6 +13,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
+import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 
@@ -24,8 +27,12 @@ public class User {
 	@Size(min=2,max=20, message="min 2 & Max 20 Character allowed !")
 	private String name;
 	
+	@NotBlank(message = "Email field is Required")
+	
 	@Column(unique = true)
 	private String email;
+	
+	@NotBlank(message = "Password field is Required")
 	private String password;
 	private String imageUrl;
 	private String about;
